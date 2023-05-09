@@ -16,10 +16,16 @@ Allow a single coroutine to be ticked manually, w/out a manager?
 Implement `trampoline()`
 
 Think about one-off coroutines
-    `ctx` cannot come from manager
-    API to create a one-off `ctx`?
-    Teach coroutine to update its own `ctx`
-    coro = Coroutine(self.boss_behavior) # creates a ctx, passes it to self.boss_behavior
+- `ctx` cannot come from manager
+- API to create a one-off `ctx`?
+- Teach coroutine to update its own `ctx`
+- coro = Coroutine(self.boss_behavior) # creates a ctx, passes it to self.boss_behavior
+
+Pausing?
+- Pausable routine should have pausable `ctx`
+- `manager.start_pausable()`?
+- If root `ctx` creates child `ctx`, do they all pause at once?
+- Why not `ctx = ctx.create_local()`?  B/c then can't pause the routine externally, can't do `my_coro.pause()`
 
 ## Design, Behavior
 
