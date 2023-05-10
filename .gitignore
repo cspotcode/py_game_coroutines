@@ -1,3 +1,5 @@
 __pycache__
 /.pdm-python
 /.venv
+/build
+/dist
