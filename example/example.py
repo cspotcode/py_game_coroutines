@@ -1,8 +1,8 @@
 import math
-import py_game_coroutines
+import game_coro
 import arcade
 
-def animation_coroutine(ctx: py_game_coroutines.Context, sprite: arcade.Sprite) -> py_game_coroutines.CoroutineGenerator:
+def animation_coroutine(ctx: game_coro.Context, sprite: arcade.Sprite) -> game_coro.CoroutineGenerator:
     # Everything before the first yield runs when you `.start()` it, to setup
     # the routine.
     sprite.alpha = 128
@@ -39,7 +39,7 @@ def animation_coroutine(ctx: py_game_coroutines.Context, sprite: arcade.Sprite) 
 sprite = arcade.SpriteSolidColor(20, 20, arcade.color.WHITE)
 sprite.position = (50, 300)
 
-manager = py_game_coroutines.CoroutineManager()
+manager = game_coro.CoroutineManager()
 
 coroutine = manager.start(animation_coroutine(manager.ctx, sprite))
 

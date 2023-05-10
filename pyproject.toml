@@ -1,0 +1,20 @@
+[project]
+name = "game_coro"
+version = "0.0.1"
+description = "Coroutine runner for games"
+authors = [
+    {name = "Andrew Bradley", email = "cspotcode@gmail.com"},
+]
+dependencies = []
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project.optional-dependencies]
+dev = [
+    "arcade>=2.6.17",
+]

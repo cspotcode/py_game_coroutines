@@ -1,31 +1,17 @@
-# py_game_coroutines
+# game_coro
 
-Run the example with:
+Coroutines for games. Write logic as a python generator, then tick it every
+frame. Use `yield` to pause till the next frame, or use helpers to pause a given
+number of frames or seconds.
+
+This library is currently experimental: no tests, few docs.  For usage, check
+out the example: `example/example.py`
+
+Run the example by cloning this repository, then:
 
 ```shell
 python -m example.example
 ```
-
-## TODO
-
-Typecheck, including examples, with pyright strict mode and mypy strict mode.
-Copy ruff and black configs.
-Allow a single coroutine to be ticked manually, w/out a manager?
-    Makes the API more complex
-
-Implement `trampoline()`
-
-Think about one-off coroutines
-- `ctx` cannot come from manager
-- API to create a one-off `ctx`?
-- Teach coroutine to update its own `ctx`
-- coro = Coroutine(self.boss_behavior) # creates a ctx, passes it to self.boss_behavior
-
-Pausing?
-- Pausable routine should have pausable `ctx`
-- `manager.start_pausable()`?
-- If root `ctx` creates child `ctx`, do they all pause at once?
-- Why not `ctx = ctx.create_local()`?  B/c then can't pause the routine externally, can't do `my_coro.pause()`
 
 ## Design, Behavior
 
@@ -50,26 +36,11 @@ will detect that you've returned another generator and start iterating it.
 This only works when returning from your top-level generator.  If in a nested
 generator call, use `trampoline()`: `yield from trampoline(other_state())`
 
-## Ideas
-
-Think about coroutine creation.
+## Tips and Tricks
 
 ```python
-manager.start(coroutine_fn, arg1, arg2)
-
-# Where
-def coroutine_fn(time: Time, arg1, arg2):
-    # Wait 3 seconds
-    while time.local_time < 3:
-      yield
+return (yield from self.other())
 ```
 
-How is `time` passed to child coroutines?  Is `start` exposed on the `Time` object, maybe it's a `CoroutineContext` object instead?
-
-```python
-def coroutine(ctx: CoroutineContext, arg1, arg2):
-    yield ctx.start(other_coroutine)
-
-```
-
-`start()` method can accept either a generator or a callable.  If input is not a generator, will call it expecting to get a generator, passing it a new `ctx` and any args and kwargs.
+Allows `self.other()` to return a value, which will be returned through
+Can trampoline from it.

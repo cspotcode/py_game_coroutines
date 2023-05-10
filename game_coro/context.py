@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 
 if TYPE_CHECKING:
-    from py_game_coroutines import CoroutineManager
+    from .manager import CoroutineManager
 
 class Context:
     __slots__ = ('delta_time', '_manager')

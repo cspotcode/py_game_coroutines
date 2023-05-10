@@ -1,5 +1,5 @@
 from typing import Generator, cast
-from py_game_coroutines.misc import CoroutineGenerator
+from .misc import CoroutineGenerator
 
 
 class Coroutine:
