@@ -1,4 +1,4 @@
-from weakref import WeakSet
+from weakref import WeakSet, ref
 
 from .misc import CoroutineGenerator
 from .context import Context, ContextWithLocalTime
@@ -51,3 +51,6 @@ class CoroutineManager:
         for c in self._coroutines:
             c.stop()
         self.coroutines = [c for c in self._coroutines if not c.finished]
+
+    def clear(self):
+        self._coroutines[:] = []
