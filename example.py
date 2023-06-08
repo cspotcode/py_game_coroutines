@@ -38,7 +38,6 @@ def animation_coroutine(ctx: game_coro.Context, sprite: arcade.Sprite) -> game_c
     while ctx.local_time < 3:
         delta_time = yield
         sprite.alpha -= delta_time*12
-        print(sprite.alpha)
         yield
     sprite.alpha = 0
 

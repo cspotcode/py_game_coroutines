@@ -57,7 +57,6 @@ class Context:
 
     def reset(self):
         self.delta_time = 0
-        self._manager.clear()
 
 class ContextWithLocalTime(Context):
     __slots__ = ('local_time','__weakref__')
