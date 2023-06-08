@@ -55,6 +55,10 @@ class Context:
         for _x in range(ticks):
             yield
 
+    def reset(self):
+        self.delta_time = 0
+        self._manager.clear()
+
 class ContextWithLocalTime(Context):
     __slots__ = ('local_time','__weakref__')
     local_time: float
@@ -72,3 +76,7 @@ class ContextWithLocalTime(Context):
         """
         while self.local_time < wait_until_local_time:
             yield
+
+    def reset(self):
+        super().reset()
+        self.local_time = 0

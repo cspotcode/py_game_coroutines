@@ -51,3 +51,6 @@ class CoroutineManager:
         for c in self._coroutines:
             c.stop()
         self.coroutines = [c for c in self._coroutines if not c.finished]
+
+    def clear(self):
+        self._coroutine = WeakSet()

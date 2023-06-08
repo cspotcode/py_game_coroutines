@@ -32,6 +32,26 @@ def animation_coroutine(ctx: game_coro.Context, sprite: arcade.Sprite) -> game_c
         yield
     sprite.center_y = start_y
 
+    #Disappear
+    ctx.reset()
+    # For the next 3 seconds, slowly disappear
+    while ctx.local_time < 3:
+        delta_time = yield
+        sprite.alpha -= delta_time*12
+        print(sprite.alpha)
+        yield
+    sprite.alpha = 0
+
+    # Pause for 2 seconds, then reappear
+    yield from ctx.wait(2)
+    ctx.reset()
+    # For the next 3 seconds, slowly reappear
+    while ctx.local_time < 3:
+        delta_time = yield
+        sprite.alpha -= delta_time*12
+        yield
+    sprite.alpha = 128
+
     # Pause for 2 seconds, then destroy the sprite
     yield from ctx.wait(2)
     sprite.remove_from_sprite_lists()
