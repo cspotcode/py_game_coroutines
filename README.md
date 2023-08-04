@@ -1,19 +1,31 @@
 # game_coro
 
-Coroutines for games. Write logic as a python generator, then tick it every
-frame. Use `yield` to pause till the next frame, or use helpers to pause a given
-number of frames or seconds.
+Framework-agnostic coroutines for games in Python.
 
-This library is currently experimental: no tests, few docs.  For usage, check
-out the example: `example/example.py`
+Features:
 
-Run the example by cloning this repository, then:
+* Write logic as a python generator, then tick it every
+frame.
+* Use `yield` to pause till the next frame
+* Pause for a given number of frames or seconds by using helpers
 
-```shell
-python -m example.example
-```
+
+## Usage
+
+**Warning: This library is currently experimental!**
+
+There are no tests and limited few docs. For usage, check out [example/example.py](example/example.py). You can run it by doing the following:
+
+1. [Clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository?tool=desktop)
+2. `cd py_game_coroutines`
+3. `pip install -e .`
+4. `pip install arcade==3.0.0dev23` to install the 3.0 development preview of the [Arcade library](https://github.com/pythonarcade/arcade)
+5. `python -m example.example` to run the example
+
 
 ## Design, Behavior
+
+*Note: this section is still somewhat unorganized. Treat it as unfinished notes!*
 
 Coroutines should not expect raised exceptions to be swallowed.  
 Just like any other call, exceptions will crash the game.
