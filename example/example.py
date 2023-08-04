@@ -1,6 +1,17 @@
+"""
+An example of animation through coroutines using the Arcade framework.
+
+Although your projects can use any framework you'd like, this example
+uses the development preview of the Arcade framework. You can install
+it by running the following command from the terminal::
+
+    pip install arcade==3.0.0dev23
+
+"""
 import math
 import game_coro
 import arcade
+
 
 def animation_coroutine(ctx: game_coro.Context, sprite: arcade.Sprite) -> game_coro.CoroutineGenerator:
     # Everything before the first yield runs when you `.start()` it, to setup
@@ -36,19 +47,34 @@ def animation_coroutine(ctx: game_coro.Context, sprite: arcade.Sprite) -> game_c
     yield from ctx.wait(2)
     sprite.remove_from_sprite_lists()
 
-sprite = arcade.SpriteSolidColor(20, 20, arcade.color.WHITE)
-sprite.position = (50, 300)
-
-manager = game_coro.CoroutineManager()
-
-coroutine = manager.start(animation_coroutine(manager.ctx, sprite))
 
 class Game(arcade.Window):
-    def on_update(self, delta_time):
-        manager.update(delta_time)
-    def on_draw(self):
-        self.clear(arcade.color.BLACK)
-        sprite.draw()
 
-game = Game()
-game.run()
+    def __init__(self, width: int = 800,  height: int = 600):
+        super().__init__(width=width, height=height)
+        # Create a SpriteList to hold and draw the sprites
+        self.sprites = arcade.SpriteList()
+
+        # Create a CoroutineManager to tick the coroutine
+        self.manager = game_coro.CoroutineManager()
+
+        # Create the sprite we'll animate and add it to the SpriteList
+        self.sprite = arcade.SpriteSolidColor(20, 20, arcade.color.WHITE)
+        self.sprite.position = (self.width // 2, self.height // 2)
+        self.sprites.append(self.sprite)
+
+        # Create the coroutine with the sprite
+        self.coroutine = self.manager.start(animation_coroutine(self.manager.ctx, self.sprite))
+
+    def on_update(self, delta_time: float):
+        # Tick all coroutines by delta_time
+        self.manager.update(delta_time)
+
+    def on_draw(self):
+        self.clear()
+        self.sprites.draw()
+
+
+if __name__ == "__main__":
+    game = Game()
+    game.run()
